@@ -15,24 +15,28 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final whiteColor = const Color(0xFFF5F6FA);
     final categoryList = StateContainer.of(context).categoryList;
 
+    var appBar = AppBar(
+      backgroundColor: blueColor,
+      title: Text(
+        'Categories',
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
+      actions: <Widget>[],
+    );
+
+    var body = Container(
+      padding: EdgeInsets.only(top: 20),
+      child: ListView.builder(
+        itemCount: categoryList.length,
+        itemBuilder: (context, index) {
+          return buildContainerItem(categoryList[index], context);
+        },
+      ),
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: blueColor,
-        title: Text(
-          'Categories',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[],
-      ),
-      body: Container(
-        padding: EdgeInsets.only(top: 20),
-        child: ListView.builder(
-          itemCount: categoryList.length,
-          itemBuilder: (context, index) {
-            return buildContainerItem(categoryList[index], context);
-          },
-        ),
-      ),
+      appBar: appBar,
+      body: body,
       floatingActionButton: buildFloatingActionButton(whiteColor, context),
     );
   }
@@ -61,9 +65,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(category.categoryPercent.toString(),
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                Text(
+                  category.categoryPercent.toString(),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                )
               ],
             ),
           ),

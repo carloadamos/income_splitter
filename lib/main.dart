@@ -27,7 +27,6 @@ class IncomeSplitter extends StatelessWidget {
       onGenerateRoute: _getRoute,
       routes: {
         '/': (context) => HomePage(),
-        // 'calculate': (context) => CalculatePage(),
         'categories': (context) => CategoriesPage(),
       },
     );

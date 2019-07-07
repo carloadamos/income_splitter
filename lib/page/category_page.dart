@@ -15,7 +15,6 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     bool newCategory = widget.category.categoryId == 0 ? true : false;
-
     String title = newCategory ? 'New Category' : widget.category.categoryName;
 
     var categoryNameController = TextEditingController();
@@ -26,10 +25,30 @@ class _CategoryPageState extends State<CategoryPage> {
 
     Category selectedCategory = widget.category;
 
+    var percentageSlider = PercentageSlider(
+        initialValue: selectedCategory.categoryPercent,
+        category: selectedCategory);
+
+    var categoryNameTextField = CategoryNameTextField(
+      category: selectedCategory,
+      textFieldColor: textFieldColor,
+      categoryNameController: categoryNameController,
+    );
+
+    var actionButtons = ActionButtons(
+      saveButton: SaveButton(
+        category: selectedCategory,
+        textController: categoryNameController,
+      ),
+      cancelButton: CancelButton(),
+    );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('$title'.toUpperCase()),
+        title: Text(
+          '$title'.toUpperCase(),
+        ),
       ),
       body: Center(
         child: Column(
@@ -38,24 +57,13 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    PercentageSlider(
-                        initialValue: selectedCategory.categoryPercent,
-                        category: selectedCategory),
-                    CategoryNameTextField(
-                      textFieldColor: textFieldColor,
-                      categoryNameController: categoryNameController,
-                    ),
+                    percentageSlider,
+                    categoryNameTextField,
                   ],
                 ),
               ),
             ),
-            ActionButtons(
-              saveButton: SaveButton(
-                category: selectedCategory,
-                textController: categoryNameController,
-              ),
-              cancelButton: CancelButton(),
-            )
+            actionButtons
           ],
         ),
       ),
@@ -68,10 +76,12 @@ class CategoryNameTextField extends StatelessWidget {
     Key key,
     @required this.textFieldColor,
     @required this.categoryNameController,
+    @required this.category,
   }) : super(key: key);
 
   final Color textFieldColor;
   final TextEditingController categoryNameController;
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +96,6 @@ class CategoryNameTextField extends StatelessWidget {
         child: TextFormField(
           textAlign: TextAlign.center,
           controller: categoryNameController,
-          // onSaved: (context) =>
-          //     stateContainer.title = categoryNameController.text,
           style: TextStyle(fontSize: 18),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15.0),
@@ -153,11 +161,10 @@ class SaveButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
+          category.categoryName = textController.text;
           List<Category> modifiedCategories =
               StateContainer.of(context).categoryList;
           final container = StateContainer.of(context);
-          // container.title = textController.text;
-          // container.category.categoryName = container.title;
           container.updateCategoryList(modifiedCategories);
           Navigator.pop(context);
         },
