@@ -23,6 +23,35 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    Future<bool> _showDialog(List<Category> categoryList, selectedCategory) async => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Do you want to remove this category?'),
+            content: Text('This will remove the category permanently'),
+            actions: <Widget>[
+              FlatButton(
+                color: Colors.grey,
+                child: Text('Yes'),
+                onPressed: () {
+                  categoryList.remove(selectedCategory);
+                  Navigator.pop(context, true);
+                },
+              ),
+              FlatButton(
+                color: Colors.red,
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+              )
+            ],
+          );
+        },
+      );
+
     final textFieldColor = const Color(0xFFE6EAFD);
 
     Category selectedCategory = widget.category;
@@ -51,6 +80,17 @@ class _CategoryPageState extends State<CategoryPage> {
         title: Text(
           categoryNameController.text.toUpperCase(),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.delete_forever),
+              onPressed: () async {
+                var categoryList = StateContainer.of(context).categoryList;
+                bool removeSelected = await _showDialog(categoryList, widget.category);
+                if (removeSelected){
+                  Navigator.pop(context);
+                }
+              }),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -103,9 +143,10 @@ class CategoryNameTextField extends StatelessWidget {
           controller: categoryNameController,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.go,
-          onEditingComplete: (){
-              category.categoryName = categoryNameController.text;
-              FocusScope.of(context).requestFocus(new FocusNode());},
+          onEditingComplete: () {
+            category.categoryName = categoryNameController.text;
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
           style: TextStyle(fontSize: 18),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15.0),

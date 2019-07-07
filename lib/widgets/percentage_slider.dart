@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/category.dart';
-import 'package:income_splitter/state/state_container.dart';
 
 class PercentageSlider extends StatefulWidget {
   const PercentageSlider({Key key, this.initialValue, this.category})
@@ -25,29 +24,31 @@ class _PercentageSliderState extends State<PercentageSlider> {
   Widget build(BuildContext context) {
     _value = _value == 0.0 ? widget.initialValue : _value;
     _textValue = _value.round().toString();
-    final stateContainer = StateContainer.of(context).categoryList;
 
-    return Column(
-      children: <Widget>[
-        Text(
-          '$_textValue' + " %",
-          style: TextStyle(fontSize: 54.0),
-        ),
-        Slider(
-          value: _value,
-          min: 0,
-          max: 100,
-          activeColor: Colors.red,
-          inactiveColor: Colors.grey,
-          onChanged: (double updatedValue) {
-            setState(() {
-              _value = updatedValue;
-              _textValue = _value.round().toString();
-              widget.category.categoryPercent = double.parse(_textValue);
-            });
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            '$_textValue' + " %",
+            style: TextStyle(fontSize: 54.0),
+          ),
+          Slider(
+            value: _value,
+            min: 0,
+            max: 100,
+            activeColor: Colors.red,
+            inactiveColor: Colors.grey,
+            onChanged: (double updatedValue) {
+              setState(() {
+                _value = updatedValue;
+                _textValue = _value.round().toString();
+                widget.category.categoryPercent = double.parse(_textValue);
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
