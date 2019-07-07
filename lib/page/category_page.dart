@@ -12,13 +12,18 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  TextEditingController categoryNameController = TextEditingController();
+
+  @override
+  initState() {
+    categoryNameController.text = widget.category.categoryName;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool newCategory = widget.category.categoryId == 0 ? true : false;
-    String title = newCategory ? 'New Category' : widget.category.categoryName;
 
-    var categoryNameController = TextEditingController();
-    categoryNameController.text = title.toUpperCase();
+
 
     // Color
     final textFieldColor = const Color(0xFFE6EAFD);
@@ -47,24 +52,27 @@ class _CategoryPageState extends State<CategoryPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          '$title'.toUpperCase(),
+          categoryNameController.text.toUpperCase(),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    percentageSlider,
-                    categoryNameTextField,
-                  ],
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      percentageSlider,
+                      categoryNameTextField,
+                    ],
+                  ),
                 ),
               ),
-            ),
-            actionButtons
-          ],
+              actionButtons
+            ],
+          ),
         ),
       ),
     );
@@ -96,6 +104,9 @@ class CategoryNameTextField extends StatelessWidget {
         child: TextFormField(
           textAlign: TextAlign.center,
           controller: categoryNameController,
+          keyboardType: TextInputType.text,
+          onEditingComplete: () =>
+              category.categoryName = categoryNameController.text,
           style: TextStyle(fontSize: 18),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15.0),
