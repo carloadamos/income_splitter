@@ -121,16 +121,18 @@ class CalculatePage extends StatelessWidget {
       double percentage, String title, double totalAmount) {
     String itemTitle = title.toUpperCase();
     double budgetAmount = totalAmount * (percentage / 100);
+    final percentFormatter = NumberFormat('#');
+    final amountFormatter = NumberFormat('#,###,###.00');
 
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 10.0),
       child: ListTile(
         leading: Text(
-          '$percentage%',
+          percentFormatter.format(percentage) + ' %',
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
         ),
         title: Text('$itemTitle'),
-        trailing: Text('PHP $budgetAmount',
+        trailing: Text('PHP ' + amountFormatter.format(budgetAmount),
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
       ),
     );
