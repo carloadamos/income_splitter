@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/category_page.dart';
 import 'package:income_splitter/state/state_container.dart';
+import 'package:intl/intl.dart';
 
 class CategoriesPage extends StatefulWidget {
   @override
@@ -42,6 +43,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   Padding buildContainerItem(Category category, BuildContext context) {
+
+    final percentageFormatter = NumberFormat('#');
+
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Container(
@@ -65,8 +70,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                 ),
+                SizedBox(width: 10.0,),
                 Text(
-                  category.categoryPercent.toString(),
+                  percentageFormatter.format(category.categoryPercent).toString() + ' %',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 )
               ],

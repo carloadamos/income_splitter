@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/state/state_container.dart';
 import 'package:income_splitter/widgets/percentage_slider.dart';
@@ -22,10 +23,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-    // Color
     final textFieldColor = const Color(0xFFE6EAFD);
 
     Category selectedCategory = widget.category;
@@ -105,8 +102,10 @@ class CategoryNameTextField extends StatelessWidget {
           textAlign: TextAlign.center,
           controller: categoryNameController,
           keyboardType: TextInputType.text,
-          onEditingComplete: () =>
-              category.categoryName = categoryNameController.text,
+          textInputAction: TextInputAction.go,
+          onEditingComplete: (){
+              category.categoryName = categoryNameController.text;
+              FocusScope.of(context).requestFocus(new FocusNode());},
           style: TextStyle(fontSize: 18),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15.0),
@@ -172,11 +171,18 @@ class SaveButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          category.categoryName = textController.text;
-          List<Category> modifiedCategories =
-              StateContainer.of(context).categoryList;
           final container = StateContainer.of(context);
+          List<Category> modifiedCategories = container.categoryList;
+
+          category.categoryName = textController.text;
+
+          if (category.categoryId == 0) {
+            category.categoryId = modifiedCategories.length;
+            modifiedCategories.add(category);
+          }
+
           container.updateCategoryList(modifiedCategories);
+
           Navigator.pop(context);
         },
       ),

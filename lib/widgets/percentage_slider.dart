@@ -25,7 +25,7 @@ class _PercentageSliderState extends State<PercentageSlider> {
   Widget build(BuildContext context) {
     _value = _value == 0.0 ? widget.initialValue : _value;
     _textValue = _value.round().toString();
-    final container = StateContainer.of(context);
+    final stateContainer = StateContainer.of(context).categoryList;
 
     return Column(
       children: <Widget>[
