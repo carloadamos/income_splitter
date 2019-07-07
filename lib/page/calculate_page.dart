@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/categorylist.dart';
-import 'package:income_splitter/state_container.dart';
 import 'package:intl/intl.dart';
 
 class CalculatePage extends StatelessWidget {
+  final double amountToCalculate;
+  CalculatePage({this.amountToCalculate});
+
   @override
   Widget build(BuildContext context) {
     final blueColor = const Color(0xFF2323E2);
     final whiteColor = const Color(0xFFF5F6FA);
-    final amount = StateContainer.of(context).income;
     final currencySymbol = NumberFormat().simpleCurrencySymbol('PHP');
     final formatCurrency = NumberFormat.currency(symbol: currencySymbol);
-  
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +39,7 @@ class CalculatePage extends StatelessWidget {
                         color: whiteColor),
                   ),
                   Text(
-                    formatCurrency.format(amount),
+                    formatCurrency.format(amountToCalculate),
                     style: TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.bold,
@@ -72,14 +72,15 @@ class CalculatePage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      child: ListView.builder(
-                        itemCount: categories.length,
-                        itemBuilder: (context, index)
-                        {
-                          return buildBreakDownList(categories[index].categoryPercent, categories[index].categoryName,amount);
-                        },
-                      )
-                    ),
+                        child: ListView.builder(
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        return buildBreakDownList(
+                            categories[index].categoryPercent,
+                            categories[index].categoryName,
+                            amountToCalculate);
+                      },
+                    )),
                   ),
                 ],
               ),
@@ -116,9 +117,10 @@ class CalculatePage extends StatelessWidget {
     );
   }
 
-  Padding buildBreakDownList(double percentage, String title, double totalAmount) {
+  Padding buildBreakDownList(
+      double percentage, String title, double totalAmount) {
     String itemTitle = title.toUpperCase();
-    double budgetAmount = totalAmount * (percentage/100);
+    double budgetAmount = totalAmount * (percentage / 100);
 
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 10.0),

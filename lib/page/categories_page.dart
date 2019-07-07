@@ -75,7 +75,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 category: category,
               ),
             );
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => Category(newCategory: false,)));
           },
         ),
       ),

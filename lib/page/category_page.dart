@@ -87,8 +87,8 @@ class CategoryNameTextField extends StatelessWidget {
         child: TextFormField(
           textAlign: TextAlign.center,
           controller: categoryNameController,
-          onSaved: (context) =>
-              stateContainer.title = categoryNameController.text,
+          // onSaved: (context) =>
+          //     stateContainer.title = categoryNameController.text,
           style: TextStyle(fontSize: 18),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15.0),
@@ -157,8 +157,8 @@ class SaveButton extends StatelessWidget {
           List<Category> modifiedCategories =
               StateContainer.of(context).categoryList;
           final container = StateContainer.of(context);
-          container.title = textController.text;
-          container.category.categoryName = container.title;
+          // container.title = textController.text;
+          // container.category.categoryName = container.title;
           container.updateCategoryList(modifiedCategories);
           Navigator.pop(context);
         },

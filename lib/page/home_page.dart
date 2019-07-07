@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/categorylist.dart';
+import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/state_container.dart';
 
 class HomePage extends StatelessWidget {
@@ -70,9 +71,10 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                final container = StateContainer.of(context);
-                container.updateIncomeAmount(double.parse(incomeController.text));
-                Navigator.pushNamed(context, 'calculate');
+                Navigator.pushNamed(context, 'calculate',
+                    arguments: CalculatePage(
+                      amountToCalculate: double.parse(incomeController.text),
+                    ));
               },
             ),
           ],

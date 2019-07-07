@@ -44,7 +44,6 @@ class _PercentageSliderState extends State<PercentageSlider> {
             setState(() {
               _value = updatedValue;
               _textValue = _value.round().toString();
-              container.category = widget.category;
               widget.category.categoryPercent = double.parse(_textValue);
             });
           },

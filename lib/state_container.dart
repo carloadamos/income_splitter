@@ -5,14 +5,8 @@ import 'package:income_splitter/models/categorylist.dart';
 class StateContainer extends StatefulWidget {
   final Widget child;
   final List<Category> categories;
-  final double incomeAmount;
-  final Category category;
 
-  StateContainer(
-      {@required this.child,
-      this.categories,
-      this.incomeAmount,
-      this.category});
+  StateContainer({@required this.child, this.categories});
 
   static _StateContainerState of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(InheritedStateContainer)
@@ -26,27 +20,12 @@ class StateContainer extends StatefulWidget {
 
 class _StateContainerState extends State<StateContainer> {
   List<Category> categoryList;
-  Category category;
-  double income;
-  String title;
 
   void updateCategoryList(updatedCategoryList) {
     setState(() {
       categoryList = updatedCategoryList;
       categories = categoryList;
     });
-  }
-
-  void updateIncomeAmount(incomeToDivide) {
-    income = incomeToDivide;
-  }
-
-  void updateSelectedCategory(updatedCategory) {
-    category = updatedCategory;
-  }
-
-  void setCategoryTitle(newTitle) {
-    title = newTitle;
   }
 
   @override
