@@ -43,9 +43,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   }
 
   Padding buildContainerItem(Category category, BuildContext context) {
-
     final percentageFormatter = NumberFormat('#');
-
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -70,9 +68,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(width: 10.0,),
+                SizedBox(
+                  width: 10.0,
+                ),
                 Text(
-                  percentageFormatter.format(category.categoryPercent).toString() + ' %',
+                  percentageFormatter
+                          .format(category.categoryPercent)
+                          .toString() +
+                      ' %',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 )
               ],

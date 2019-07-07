@@ -23,34 +23,34 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    Future<bool> _showDialog(List<Category> categoryList, selectedCategory) async => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Do you want to remove this category?'),
-            content: Text('This will remove the category permanently'),
-            actions: <Widget>[
-              FlatButton(
-                color: Colors.grey,
-                child: Text('Yes'),
-                onPressed: () {
-                  categoryList.remove(selectedCategory);
-                  Navigator.pop(context, true);
-                },
-              ),
-              FlatButton(
-                color: Colors.red,
-                child: Text('No'),
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-              )
-            ],
-          );
-        },
-      );
+    Future<bool> _showDialog(
+            List<Category> categoryList, selectedCategory) async =>
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Do you want to remove this category?'),
+              content: Text('This will remove the category permanently'),
+              actions: <Widget>[
+                FlatButton(
+                  color: Colors.grey,
+                  child: Text('Yes'),
+                  onPressed: () {
+                    categoryList.remove(selectedCategory);
+                    Navigator.pop(context, true);
+                  },
+                ),
+                FlatButton(
+                  color: Colors.red,
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                )
+              ],
+            );
+          },
+        );
 
     final textFieldColor = const Color(0xFFE6EAFD);
 
@@ -85,8 +85,9 @@ class _CategoryPageState extends State<CategoryPage> {
               icon: Icon(Icons.delete_forever),
               onPressed: () async {
                 var categoryList = StateContainer.of(context).categoryList;
-                bool removeSelected = await _showDialog(categoryList, widget.category);
-                if (removeSelected){
+                bool removeSelected =
+                    await _showDialog(categoryList, widget.category);
+                if (removeSelected) {
                   Navigator.pop(context);
                 }
               }),
