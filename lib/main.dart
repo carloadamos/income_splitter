@@ -52,12 +52,12 @@ MaterialPageRoute _buildRoute(RouteSettings settings) {
   return MaterialPageRoute(
     builder: (context) {
       if (settings.name == 'category') {
-        final CategoryPage category = settings.arguments;
-        return category;
+        final CategoryPage categoryPage = settings.arguments;
+        return categoryPage;
       }
       if (settings.name == 'calculate') {
-        final CategoryPage category = settings.arguments;
-        return category;
+        final CalculatePage calculatePage = settings.arguments;
+        return calculatePage;
       }
     },
   );
