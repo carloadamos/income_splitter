@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/categorylist.dart';
 import 'package:income_splitter/page/calculate_page.dart';
-import 'package:income_splitter/state_container.dart';
+import 'package:income_splitter/state/state_container.dart';
 
 class HomePage extends StatelessWidget {
   @override

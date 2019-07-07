@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/category.dart';
-import 'package:income_splitter/state_container.dart';
+import 'package:income_splitter/state/state_container.dart';
 
 class PercentageSlider extends StatefulWidget {
   const PercentageSlider({Key key, this.initialValue, this.category})

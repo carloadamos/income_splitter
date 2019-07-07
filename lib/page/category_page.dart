@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/category.dart';
-import 'package:income_splitter/state_container.dart';
+import 'package:income_splitter/state/state_container.dart';
 import 'package:income_splitter/widgets/percentage_slider.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     PercentageSlider(
                         initialValue: selectedCategory.categoryPercent,
                         category: selectedCategory),
-                    new CategoryNameTextField(
+                    CategoryNameTextField(
                       textFieldColor: textFieldColor,
                       categoryNameController: categoryNameController,
                     ),
@@ -49,7 +49,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ),
             ),
-            new ActionButtons(
+            ActionButtons(
               saveButton: SaveButton(
                 category: selectedCategory,
                 textController: categoryNameController,
@@ -75,7 +75,6 @@ class CategoryNameTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stateContainer = StateContainer.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Container(

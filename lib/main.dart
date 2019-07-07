@@ -3,7 +3,7 @@ import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/page/categories_page.dart';
 import 'package:income_splitter/page/category_page.dart';
 import 'package:income_splitter/page/home_page.dart';
-import 'package:income_splitter/state_container.dart';
+import 'package:income_splitter/state/state_container.dart';
 
 void main() {
   runApp(
