@@ -13,6 +13,11 @@ void main() {
   );
 }
 
+/// Goals
+/// 1. Create the UI according to design -- done
+/// 2. Add functionalities like add, edit, delete -- done
+/// 3. Save the final state of the categories locally  
+/// 4. Use firebase for saving
 class IncomeSplitter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
