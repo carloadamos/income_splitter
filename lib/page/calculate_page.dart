@@ -27,7 +27,7 @@ class CalculatePage extends StatelessWidget {
           children: <Widget>[
             Container(
               alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -52,7 +52,7 @@ class CalculatePage extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               margin:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(45.0),

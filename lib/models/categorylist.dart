@@ -8,12 +8,12 @@ List<Category> categories = [
   ),
   Category(
     categoryId: 2,
-    categoryName: 'Savings',
+    categoryName: 'Long-Term',
     categoryPercent: 10,
   ),
   Category(
     categoryId: 3,
-    categoryName: 'Play',
+    categoryName: 'Play - Spoiling Self',
     categoryPercent: 10,
   ),
   Category(
@@ -23,12 +23,12 @@ List<Category> categories = [
   ),
   Category(
     categoryId: 5,
-    categoryName: 'Financial Freedom',
+    categoryName: 'Financial Freedom - Stocks',
     categoryPercent: 10,
   ),
   Category(
     categoryId: 6,
-    categoryName: 'Give',
+    categoryName: 'Give - Donations',
     categoryPercent: 5,
   ),
 ];
