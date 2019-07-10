@@ -25,6 +25,26 @@ class _PercentageSliderState extends State<PercentageSlider> {
     _value = _value == 0.0 ? widget.initialValue : _value;
     _textValue = _value.round().toString();
 
+    showPercentDialog(double percent) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('You can only assign $percent % maximum'),
+            content: Text('You can only assign $percent % maximum'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('WTF'),
+                onPressed: () {},
+              )
+            ],
+          );
+        },
+      );
+    }
+
+    ;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -40,11 +60,19 @@ class _PercentageSliderState extends State<PercentageSlider> {
             activeColor: Colors.red,
             inactiveColor: Colors.grey,
             onChanged: (double updatedValue) {
-              setState(() {
-                _value = updatedValue;
-                _textValue = _value.round().toString();
-                widget.category.categoryPercent = double.parse(_textValue);
-              });
+              setState(
+                () {
+                  _textValue = updatedValue.round().toString();
+                  if ((double.parse(_textValue) <=
+                      widget.category.categoryPercent)) {
+                    _value = updatedValue;
+                    widget.category.categoryPercent = _value;
+                  }
+                 else{
+                    showPercentDialog(widget.category.categoryPercent);
+                 }
+                },
+              );
             },
           ),
         ],
