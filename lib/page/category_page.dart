@@ -54,9 +54,23 @@ class _CategoryPageState extends State<CategoryPage> {
 
     final textFieldColor = const Color(0xFFE6EAFD);
 
+    final categoryList = StateContainer.of(context).categoryList;
     Category selectedCategory = widget.category;
 
+    getAvailablePercentage(List<Category> list) {
+      double total = 0.0;
+      for (var item in list) {
+        if (item != selectedCategory) {
+          total += item.categoryPercent;
+        }
+      }
+      return 100-total;
+    }
+
+    double availablePercentage = getAvailablePercentage(categoryList);
+
     var percentageSlider = PercentageSlider(
+        available: availablePercentage,
         initialValue: selectedCategory.categoryPercent,
         category: selectedCategory);
 
@@ -82,15 +96,16 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.delete_forever),
-              onPressed: () async {
-                var categoryList = StateContainer.of(context).categoryList;
-                bool removeSelected =
-                    await _showDialog(categoryList, widget.category);
-                if (removeSelected) {
-                  Navigator.pop(context);
-                }
-              }),
+            icon: Icon(Icons.delete_forever),
+            onPressed: () async {
+              var categoryList = StateContainer.of(context).categoryList;
+              bool removeSelected =
+                  await _showDialog(categoryList, widget.category);
+              if (removeSelected) {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ],
       ),
       body: SingleChildScrollView(

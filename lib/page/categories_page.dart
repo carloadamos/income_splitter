@@ -16,6 +16,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final whiteColor = const Color(0xFFF5F6FA);
     final categoryList = StateContainer.of(context).categoryList;
 
+    getAvailablePercentage(list) {
+      double available = 0.0;
+      for (Category item in list) {
+        available += item.categoryPercent;
+      }
+      return 100 - available;
+    }
+
+    final double availablePercentage = getAvailablePercentage(categoryList);
+
     var appBar = AppBar(
       backgroundColor: blueColor,
       title: Text(
@@ -38,7 +48,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return Scaffold(
       appBar: appBar,
       body: body,
-      floatingActionButton: buildFloatingActionButton(whiteColor, context),
+      floatingActionButton: availablePercentage == 0.0
+          ? buildDisabledFloatingButton(whiteColor, context)
+          : buildFloatingActionButton(whiteColor, context),
     );
   }
 
@@ -92,6 +104,19 @@ class _CategoriesPageState extends State<CategoriesPage> {
           },
         ),
       ),
+    );
+  }
+
+  FloatingActionButton buildDisabledFloatingButton(
+      Color whiteColor, BuildContext context) {
+    return FloatingActionButton(
+      disabledElevation: 0.0,
+      backgroundColor: Colors.grey,
+      child: Icon(
+        Icons.add,
+        color: Color(0xFF000000),
+      ),
+      onPressed: () {},
     );
   }
 
