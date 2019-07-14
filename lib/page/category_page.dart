@@ -14,10 +14,14 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   TextEditingController categoryNameController = TextEditingController();
+  double initialPercentageValue = 0;
 
   @override
   initState() {
     categoryNameController.text = widget.category.categoryName;
+    initialPercentageValue =
+        widget.category.categoryPercent;
+
     super.initState();
   }
 
@@ -64,7 +68,7 @@ class _CategoryPageState extends State<CategoryPage> {
           total += item.categoryPercent;
         }
       }
-      return 100-total;
+      return 100 - total;
     }
 
     double availablePercentage = getAvailablePercentage(categoryList);
@@ -82,10 +86,11 @@ class _CategoryPageState extends State<CategoryPage> {
 
     var actionButtons = ActionButtons(
       saveButton: SaveButton(
+        initialValue: initialPercentageValue,
         category: selectedCategory,
         textController: categoryNameController,
       ),
-      cancelButton: CancelButton(),
+      cancelButton: CancelButton(initialValue: initialPercentageValue, selectedCategory: selectedCategory,),
     );
 
     return Scaffold(
@@ -107,6 +112,10 @@ class _CategoryPageState extends State<CategoryPage> {
             },
           ),
         ],
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){
+          selectedCategory.categoryPercent = initialPercentageValue;
+          Navigator.pop(context);
+        }),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -204,11 +213,15 @@ class ActionButtons extends StatelessWidget {
 
 class SaveButton extends StatelessWidget {
   const SaveButton(
-      {Key key, @required this.category, @required this.textController})
+      {Key key,
+      @required this.category,
+      @required this.textController,
+      this.initialValue})
       : super(key: key);
 
   final Category category;
   final TextEditingController textController;
+  final double initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +263,12 @@ class SaveButton extends StatelessWidget {
 class CancelButton extends StatelessWidget {
   const CancelButton({
     Key key,
+    this.initialValue,
+    this.selectedCategory,
   }) : super(key: key);
+
+  final double initialValue;
+  final Category selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -269,6 +287,7 @@ class CancelButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
+          selectedCategory.categoryPercent = initialValue;
           Navigator.pop(context);
         },
       ),
