@@ -16,8 +16,8 @@ void main() {
 /// Goals
 /// 1. Create the UI according to design -- done
 /// 2. Add functionalities like add, edit, delete -- done
-/// 3. Put validation on 100% 
-/// 4. Save the final state of the categories locally  
+/// 3. Put validation on 100% - done?
+/// 4. Save the final state of the categories locally - in progress
 /// 5. Use firebase for saving
 class IncomeSplitter extends StatelessWidget {
   @override

@@ -4,4 +4,10 @@ class Category {
   double categoryPercent;
 
   Category({this.categoryId, this.categoryName, this.categoryPercent});
+
+  Map<String, dynamic> toMap() => {
+        "id": categoryId,
+        "name": categoryName,
+        "percentage": categoryPercent,
+      };
 }
