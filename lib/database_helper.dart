@@ -54,7 +54,13 @@ class DBProvider {
   getAllCategory() async {
     final db = await database;
     var res = await db.query("Category");
-    List<Category> list = res.isNotEmpty ? res.map((c) => Category.fromMap(c)).toList():[];
+    List<Category> list =
+        res.isNotEmpty ? res.map((c) => Category.fromMap(c)).toList() : [];
     return list;
+  }
+
+  deleteCategory(int id) async {
+    final db = await database;
+    await db.delete("Category", where: "id = ?", whereArgs: [id]);
   }
 }

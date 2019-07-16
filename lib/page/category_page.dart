@@ -25,7 +25,7 @@ class _CategoryPageState extends State<CategoryPage> {
         widget.category.categoryPercent;
     DBProvider.db.newCategory(widget.category);
     DBProvider.db.getAllCategory();
-
+    DBProvider.db.deleteCategory(widget.category.categoryId);
     super.initState();
   }
 
