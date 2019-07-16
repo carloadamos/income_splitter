@@ -31,20 +31,30 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
-    return await openDatabase(path, version: _databaseVersion,
-    onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE Category ("
-          "id INTEGER PRIMARY KEY,"
-          "category_name TEXT,"
-          "category_percentage INT"
-          ")");
-    });
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onOpen: (db) {},
+      onCreate: (Database db, int version) async {
+        await db.execute("CREATE TABLE Category ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "name TEXT,"
+            "percentage INT"
+            ")");
+      },
+    );
   }
 
-  newClient(Category newCategory) async {
+  newCategory(Category newCategory) async {
     final db = await database;
     var res = await db.insert(_table, newCategory.toMap());
     return res;
+  }
+
+  getAllCategory() async {
+    final db = await database;
+    var res = await db.query("Category");
+    List<Category> list = res.isNotEmpty ? res.map((c) => Category.fromMap(c)).toList():[];
+    return list;
   }
 }

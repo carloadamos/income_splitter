@@ -6,8 +6,14 @@ class Category {
   Category({this.categoryId, this.categoryName, this.categoryPercent});
 
   Map<String, dynamic> toMap() => {
-        "id": categoryId,
         "name": categoryName,
         "percentage": categoryPercent,
       };
+
+  factory Category.fromMap(Map<String, dynamic> json) => new Category(
+    categoryId: json["id"],
+    categoryName: json["name"],
+    categoryPercent: double.parse(json["percentage"].toString()),
+  );
+
 }

@@ -111,7 +111,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       Color whiteColor, BuildContext context) {
     return FloatingActionButton(
       disabledElevation: 0.0,
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.red,
       child: Icon(
         Icons.add,
         color: Color(0xFF000000),

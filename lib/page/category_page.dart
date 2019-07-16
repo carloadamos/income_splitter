@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:income_splitter/database_helper.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/state/state_container.dart';
 import 'package:income_splitter/widgets/percentage_slider.dart';
@@ -16,11 +17,14 @@ class _CategoryPageState extends State<CategoryPage> {
   TextEditingController categoryNameController = TextEditingController();
   double initialPercentageValue = 0;
 
+
   @override
   initState() {
     categoryNameController.text = widget.category.categoryName;
     initialPercentageValue =
         widget.category.categoryPercent;
+    DBProvider.db.newCategory(widget.category);
+    DBProvider.db.getAllCategory();
 
     super.initState();
   }
