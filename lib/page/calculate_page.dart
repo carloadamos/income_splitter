@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:income_splitter/models/categorylist.dart';
+import 'package:income_splitter/state/state_container.dart';
 import 'package:intl/intl.dart';
 
 class CalculatePage extends StatelessWidget {
@@ -12,6 +12,8 @@ class CalculatePage extends StatelessWidget {
     final whiteColor = const Color(0xFFF5F6FA);
     final currencySymbol = NumberFormat().simpleCurrencySymbol('PHP');
     final formatCurrency = NumberFormat.currency(symbol: currencySymbol);
+
+    final categories = StateContainer.of(context).categoryList;
 
     return Scaffold(
       appBar: AppBar(

@@ -51,7 +51,7 @@ class DBProvider {
     return res;
   }
 
-  getAllCategory() async {
+  Future<List<Category>> getAllCategory() async {
     final db = await database;
     var res = await db.query("Category");
     List<Category> list =

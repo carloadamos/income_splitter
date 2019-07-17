@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:income_splitter/database_helper.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/category_page.dart';
 import 'package:income_splitter/state/state_container.dart';
@@ -19,7 +20,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     getAvailablePercentage(list) {
       double available = 0.0;
       for (Category item in list) {
-        available += item.categoryPercent;
+        available += item.categoryPercent.round();
       }
       return 100 - available;
     }
@@ -35,6 +36,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
       actions: <Widget>[],
     );
 
+    var body1 = FutureBuilder<List<Category>>(
+      future: DBProvider.db.getAllCategory(),
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return buildContainerItem(snapshot.data[index], context);
+            },
+          );
+        }
+      },
+    );
+
     var body = Container(
       padding: EdgeInsets.only(top: 20),
       child: ListView.builder(
@@ -47,7 +62,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
     return Scaffold(
       appBar: appBar,
-      body: body,
+      body: body1,
       floatingActionButton: availablePercentage == 0.0
           ? buildDisabledFloatingButton(whiteColor, context)
           : buildFloatingActionButton(whiteColor, context),

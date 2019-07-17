@@ -51,9 +51,9 @@ class _PercentageSliderState extends State<PercentageSlider> {
             style: TextStyle(fontSize: 54.0),
           ),
           Slider(
-            value: _value,
+            value: _value.round().toDouble(),
             min: 0,
-            max: _available,
+            max: _available.round().toDouble(),
             activeColor: Colors.red,
             inactiveColor: Colors.grey,
             onChanged: (double updatedValue) {

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:income_splitter/models/categorylist.dart';
+import 'package:income_splitter/database_helper.dart';
+import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/state/state_container.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textFieldColor = const Color(0xFFE6EAFD);
     TextEditingController incomeController = TextEditingController();
     final container = StateContainer.of(context);
-    container.categoryList = categories;
 
     var settingsButton = IconButton(
       icon: Icon(Icons.settings, color: Colors.black),
@@ -69,19 +80,28 @@ class HomePage extends StatelessWidget {
       },
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).accentColor,
-      appBar: appBar,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            questionText,
-            incomeInputField,
-            calculateButton,
-          ],
-        ),
-      ),
+    var body = FutureBuilder<List<Category>>(
+      future: DBProvider.db.getAllCategory(),
+      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+        if (snapshot.hasData) {
+          container.categoryList = snapshot.data;
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                questionText,
+                incomeInputField,
+                calculateButton,
+              ],
+            ),
+          );
+        }
+      },
     );
+
+    return Scaffold(
+        backgroundColor: Theme.of(context).accentColor,
+        appBar: appBar,
+        body: body);
   }
 }
