@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:income_splitter/database_helper.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/category_page.dart';
 import 'package:income_splitter/state/state_container.dart';
@@ -122,16 +121,24 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  FloatingActionButton buildDisabledFloatingButton(
-      Color whiteColor, BuildContext context) {
-    return FloatingActionButton(
-      disabledElevation: 0.0,
-      backgroundColor: Colors.red,
-      child: Icon(
-        Icons.add,
-        color: Color(0xFF000000),
-      ),
-      onPressed: () {},
+  Builder buildDisabledFloatingButton(Color whiteColor, BuildContext context) {
+    return Builder(
+      builder: (context) => FloatingActionButton(
+            disabledElevation: 0.0,
+            backgroundColor: Colors.red,
+            child: Icon(
+              Icons.add,
+              color: Color(0xFF000000),
+            ),
+            onPressed: () {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: new Text(
+                      "Total percentage allocated is 100%. Remove or edit existing category"),
+                ),
+              );
+            },
+          ),
     );
   }
 

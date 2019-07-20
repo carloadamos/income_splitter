@@ -256,7 +256,7 @@ class SaveButton extends StatelessWidget {
             DBProvider.db.updateCategory(category);
           }
 
-          container.updateCategory(category); 
+          container.updateCategory(category);
 
           Navigator.pop(context);
         },
