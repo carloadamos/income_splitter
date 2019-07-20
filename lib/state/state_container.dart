@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/models/category.dart';
-import 'package:income_splitter/models/categorylist.dart';
 
 class StateContainer extends StatefulWidget {
   final Widget child;
-  final List<Category> categories;
 
-  StateContainer({@required this.child, this.categories});
+  StateContainer({@required this.child});
 
   static _StateContainerState of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(InheritedStateContainer)
@@ -21,11 +19,16 @@ class StateContainer extends StatefulWidget {
 class _StateContainerState extends State<StateContainer> {
   List<Category> categoryList;
 
-  void updateCategoryList(updatedCategoryList) {
-    setState(() {
-      categoryList = updatedCategoryList;
-      categories = categoryList;
-    });
+  void updateCategory(updatedCategory) {
+    
+    this.categoryList
+        .where((item) => item.categoryId == updatedCategory.categoryId)
+        .first
+        .categoryName = updatedCategory.categoryName;
+    this.categoryList
+        .where((item) => item.categoryId == updatedCategory.categoryId)
+        .first
+        .categoryPercent = updatedCategory.categoryPercent;
   }
 
   @override

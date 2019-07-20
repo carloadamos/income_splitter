@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/database_helper.dart';
-import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/state/state_container.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textFieldColor = const Color(0xFFE6EAFD);
@@ -80,24 +68,35 @@ class _HomePageState extends State<HomePage> {
       },
     );
 
-    var body = FutureBuilder<List<Category>>(
+    Future<void> getData() async {
+      final list = await DBProvider.db.getAllCategory();
+      if (list.length != 0) {
+        container.categoryList = list;
+      }
+    }
+
+    getData();
+    /*var body = FutureBuilder<List<Category>>(
       future: DBProvider.db.getAllCategory(),
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (snapshot.hasData) {
           container.categoryList = snapshot.data;
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                questionText,
-                incomeInputField,
-                calculateButton,
-              ],
-            ),
-          );
-        }
-      },
+        } else {
+          container.categoryList = categories;
+        } */
+
+    var body = Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          questionText,
+          incomeInputField,
+          calculateButton,
+        ],
+      ),
     );
+    /*},
+    ); */
 
     return Scaffold(
         backgroundColor: Theme.of(context).accentColor,

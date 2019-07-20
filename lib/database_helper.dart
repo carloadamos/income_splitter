@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
   static final _databaseName = "IncomeSplitter.db";
-  static final _databaseVersion = 1;
+  static final _databaseVersion = 2;
   static final _table = 'category';
 
   static final columnId = '_id';
@@ -48,6 +48,12 @@ class DBProvider {
   newCategory(Category newCategory) async {
     final db = await database;
     var res = await db.insert(_table, newCategory.toMap());
+    return res;
+  }
+
+  updateCategory(Category updatedCategory) async {
+    final db = await database;
+    var res = await db.update(_table, updatedCategory.toMap(), where: "id=?", whereArgs: [updatedCategory.categoryId]);
     return res;
   }
 

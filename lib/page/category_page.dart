@@ -17,22 +17,17 @@ class _CategoryPageState extends State<CategoryPage> {
   TextEditingController categoryNameController = TextEditingController();
   double initialPercentageValue = 0;
 
-
   @override
   initState() {
     categoryNameController.text = widget.category.categoryName;
-    initialPercentageValue =
-        widget.category.categoryPercent;
-    DBProvider.db.newCategory(widget.category);
-    DBProvider.db.getAllCategory();
-    DBProvider.db.deleteCategory(widget.category.categoryId);
+    initialPercentageValue = widget.category.categoryPercent;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _showDialog(
-            List<Category> categoryList, selectedCategory) async =>
+            List<Category> categoryList, Category selectedCategory) async =>
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -45,6 +40,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Text('Yes'),
                   onPressed: () {
                     categoryList.remove(selectedCategory);
+                    DBProvider.db.deleteCategory(selectedCategory.categoryId);
                     Navigator.pop(context, true);
                   },
                 ),
@@ -61,14 +57,13 @@ class _CategoryPageState extends State<CategoryPage> {
         );
 
     final textFieldColor = const Color(0xFFE6EAFD);
-
     final categoryList = StateContainer.of(context).categoryList;
     Category selectedCategory = widget.category;
 
     getAvailablePercentage(List<Category> list) {
       double total = 0.0;
       for (var item in list) {
-        if (item != selectedCategory) {
+        if (item.categoryId != selectedCategory.categoryId) {
           total += item.categoryPercent;
         }
       }
@@ -78,7 +73,7 @@ class _CategoryPageState extends State<CategoryPage> {
     double availablePercentage = getAvailablePercentage(categoryList);
 
     var percentageSlider = PercentageSlider(
-        available: availablePercentage,
+        available: availablePercentage.round().toDouble(),
         initialValue: selectedCategory.categoryPercent,
         category: selectedCategory);
 
@@ -94,7 +89,10 @@ class _CategoryPageState extends State<CategoryPage> {
         category: selectedCategory,
         textController: categoryNameController,
       ),
-      cancelButton: CancelButton(initialValue: initialPercentageValue, selectedCategory: selectedCategory,),
+      cancelButton: CancelButton(
+        initialValue: initialPercentageValue,
+        selectedCategory: selectedCategory,
+      ),
     );
 
     return Scaffold(
@@ -116,10 +114,13 @@ class _CategoryPageState extends State<CategoryPage> {
             },
           ),
         ],
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){
-          selectedCategory.categoryPercent = initialPercentageValue;
-          Navigator.pop(context);
-        }),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            selectedCategory.categoryPercent = initialPercentageValue;
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -246,16 +247,16 @@ class SaveButton extends StatelessWidget {
         ),
         onPressed: () {
           final container = StateContainer.of(context);
-          List<Category> modifiedCategories = container.categoryList;
-
           category.categoryName = textController.text;
 
           if (category.categoryId == 0) {
-            category.categoryId = modifiedCategories.length;
-            modifiedCategories.add(category);
+            container.categoryList.add(category);
+            DBProvider.db.newCategory(category);
+          } else {
+            DBProvider.db.updateCategory(category);
           }
 
-          container.updateCategoryList(modifiedCategories);
+          container.updateCategory(category); 
 
           Navigator.pop(context);
         },

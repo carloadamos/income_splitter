@@ -36,7 +36,8 @@ class _PercentageSliderState extends State<PercentageSlider> {
           String percentText = percent.round().toString();
           return AlertDialog(
             title: Text('You can only assign $percentText% at maximum'),
-            content: Text('Review your categories and free up some allocation to set this.'),
+            content: Text(
+                'Review your categories and free up some allocation to set this.'),
           );
         },
       );
@@ -61,7 +62,7 @@ class _PercentageSliderState extends State<PercentageSlider> {
                 () {
                   _textValue = updatedValue.round().toString();
                   if ((double.parse(_textValue) <= _available)) {
-                    _value = updatedValue;
+                    _value = double.parse(_textValue);
                     widget.category.categoryPercent = _value;
                   } else {
                     showPercentDialog(_available);

@@ -36,7 +36,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       actions: <Widget>[],
     );
 
-    var body1 = FutureBuilder<List<Category>>(
+    /* var body1 = FutureBuilder<List<Category>>(
       future: DBProvider.db.getAllCategory(),
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (snapshot.hasData) {
@@ -48,7 +48,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           );
         }
       },
-    );
+    ); */
 
     var body = Container(
       padding: EdgeInsets.only(top: 20),
@@ -62,7 +62,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
     return Scaffold(
       appBar: appBar,
-      body: body1,
+      body: body,
       floatingActionButton: availablePercentage == 0.0
           ? buildDisabledFloatingButton(whiteColor, context)
           : buildFloatingActionButton(whiteColor, context),
