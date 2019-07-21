@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:income_splitter/models/category.dart';
+import 'package:income_splitter/models/categorylist.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -41,6 +42,9 @@ class DBProvider {
             "name TEXT,"
             "percentage INT"
             ")");
+        for (int i = 0; i < categories.length; i++) {
+          DBProvider.db.newCategory(categories[i]);
+        }
       },
     );
   }
@@ -53,7 +57,8 @@ class DBProvider {
 
   updateCategory(Category updatedCategory) async {
     final db = await database;
-    var res = await db.update(_table, updatedCategory.toMap(), where: "id=?", whereArgs: [updatedCategory.categoryId]);
+    var res = await db.update(_table, updatedCategory.toMap(),
+        where: "id=?", whereArgs: [updatedCategory.categoryId]);
     return res;
   }
 

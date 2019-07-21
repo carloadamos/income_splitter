@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/database_helper.dart';
+import 'package:income_splitter/models/category.dart';
+import 'package:income_splitter/models/categorylist.dart';
 import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/state/state_container.dart';
 
@@ -72,6 +74,8 @@ class HomePage extends StatelessWidget {
       final list = await DBProvider.db.getAllCategory();
       if (list.length != 0) {
         container.categoryList = list;
+      } else {
+        container.categoryList = categories;
       }
     }
 
