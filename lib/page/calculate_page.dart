@@ -75,7 +75,7 @@ class CalculatePage extends StatelessWidget {
                   Expanded(
                     child: Container(
                         child: ListView.builder(
-                      itemCount: categories.length,
+                      itemCount: categories == null ? 0 : categories.length,
                       itemBuilder: (context, index) {
                         return buildBreakDownList(
                             categories[index].categoryPercent,

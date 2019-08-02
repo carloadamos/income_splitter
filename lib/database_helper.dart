@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:income_splitter/models/category.dart';
@@ -30,7 +31,9 @@ class DBProvider {
   }
 
   initDB() async {
+    log('Before documents');
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    log('After documents');
     String path = join(documentsDirectory.path, _databaseName);
     return await openDatabase(
       path,

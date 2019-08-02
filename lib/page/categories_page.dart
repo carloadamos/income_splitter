@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:income_splitter/database_helper.dart';
 import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/page/category_page.dart';
 import 'package:income_splitter/state/state_container.dart';
@@ -35,7 +36,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       actions: <Widget>[],
     );
 
-    /* var body1 = FutureBuilder<List<Category>>(
+     var body = FutureBuilder<List<Category>>(
       future: DBProvider.db.getAllCategory(),
       builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
         if (snapshot.hasData) {
@@ -47,16 +48,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
           );
         }
       },
-    ); */
-
-    var body = Container(
-      padding: EdgeInsets.only(top: 20),
-      child: ListView.builder(
-        itemCount: categoryList.length,
-        itemBuilder: (context, index) {
-          return buildContainerItem(categoryList[index], context);
-        },
-      ),
     );
 
     return Scaffold(

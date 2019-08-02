@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/page/categories_page.dart';
 import 'package:income_splitter/page/category_page.dart';
+import 'package:income_splitter/page/currency_page.dart';
 import 'package:income_splitter/page/home_page.dart';
 import 'package:income_splitter/state/state_container.dart';
 
@@ -24,6 +25,9 @@ class IncomeSplitter extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          elevation: 0.0,
+        ),
         brightness: Brightness.light,
         primaryColor: Color(0xFF2323E2),
         accentColor: Color(0xFFF5F6FA),
@@ -34,6 +38,7 @@ class IncomeSplitter extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         'categories': (context) => CategoriesPage(),
+        'currency': (context) => CurrencyPage(),
       },
     );
   }

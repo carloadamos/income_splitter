@@ -1,28 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:income_splitter/database_helper.dart';
-import 'package:income_splitter/models/category.dart';
 import 'package:income_splitter/models/categorylist.dart';
 import 'package:income_splitter/page/calculate_page.dart';
 import 'package:income_splitter/state/state_container.dart';
+import 'package:simple_permissions/simple_permissions.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _allowWriteFile = false;
+
+  @override
+  void initState() {
+    requestWritePermission();
+    super.initState();
+  }
+
+  requestWritePermission() async {
+    Permission permission;
+    bool permissionStatus = await SimplePermissions.checkPermission(permission);
+    
+    if (permissionStatus) {
+      setState(
+        () {
+          _allowWriteFile = true;
+        },
+      );
+    }
+    else
+    {
+        await SimplePermissions.requestPermission(
+            Permission.WriteExternalStorage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final textFieldColor = const Color(0xFFE6EAFD);
     TextEditingController incomeController = TextEditingController();
     final container = StateContainer.of(context);
 
-    var settingsButton = IconButton(
-      icon: Icon(Icons.settings, color: Colors.black),
-      onPressed: () {
-        Navigator.pushNamed(context, 'categories');
+    var popup = PopupMenuButton<String>(
+      icon: Icon(Icons.more_vert, color: Colors.black,),
+      onSelected: (String value) {
+        if (value == 'Categories'){
+          Navigator.pushNamed(context, 'categories');
+        }
+        else
+        {
+          Navigator.pushNamed(context, 'currency');
+        }
+
       },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'Categories',
+              child: Text('Categories'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Currency',
+              child: Text('Currency'),
+            ),
+          ],
     );
 
     var appBar = AppBar(
       backgroundColor: Theme.of(context).accentColor,
       elevation: 0.0,
-      actions: <Widget>[settingsButton],
+      actions: <Widget>[popup],
     );
 
     var questionText = Text(
@@ -79,9 +127,15 @@ class HomePage extends StatelessWidget {
       }
     }
 
-    getData();
+    if (_allowWriteFile) {
+      getData();
+    }
 
-    var body = Center(
+    var noPermission = Center(
+      child: Text('Permission denied'),
+    );
+
+    var withPermission = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -95,6 +149,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).accentColor,
         appBar: appBar,
-        body: body);
+        body: _allowWriteFile ? withPermission : noPermission);
   }
 }
