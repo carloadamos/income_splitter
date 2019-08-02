@@ -80,14 +80,6 @@ class HomePage extends StatelessWidget {
     }
 
     getData();
-    /*var body = FutureBuilder<List<Category>>(
-      future: DBProvider.db.getAllCategory(),
-      builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
-        if (snapshot.hasData) {
-          container.categoryList = snapshot.data;
-        } else {
-          container.categoryList = categories;
-        } */
 
     var body = Center(
       child: Column(
@@ -99,8 +91,6 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
-    /*},
-    ); */
 
     return Scaffold(
         backgroundColor: Theme.of(context).accentColor,

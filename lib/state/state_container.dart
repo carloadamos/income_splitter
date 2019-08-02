@@ -20,7 +20,6 @@ class _StateContainerState extends State<StateContainer> {
   List<Category> categoryList;
 
   void updateCategory(updatedCategory) {
-    
     this.categoryList
         .where((item) => item.categoryId == updatedCategory.categoryId)
         .first
